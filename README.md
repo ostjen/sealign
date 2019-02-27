@@ -1,7 +1,6 @@
-# Embedding Align
+# SEALIGN
 
-Use word embeddings for sentence alignment.
-
+Use of word embeddings for bilingual sentence alignment. 
 
 
 # aligner.py
