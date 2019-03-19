@@ -3,9 +3,9 @@
 Use of word embeddings for bilingual sentence alignment. 
 
 
-# aligner.py
+# tokenizer.py
 
-Script that uses NLTK model for tokenization and adds a ￭ symbol for reference. 
+Script that uses NLTK model for tokenization and adds a * symbol for reference. 
 First  command line argument -> input text file
 Second command line argument -> output file
 
