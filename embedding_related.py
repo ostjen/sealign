@@ -123,5 +123,6 @@ def generate_matrix(src_model, tgt_model, src_sentences, tgt_sentences):
         for j in range(0, len(tgt_sentences)):
             distances.append(wmdistance_b(src_model, tgt_model, src_sentences[i], tgt_sentences[j]))
         matrix = np.insert(matrix, i, distances, 0)
+    matrix = matrix[:len(src_sentences)]
     #from datetime import datetime
     np.savetxt("./results/result_matrix.csv", matrix, delimiter=",")

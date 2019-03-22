@@ -8,7 +8,7 @@ def load_care(path,language):
         stringlist = []
         item = item.replace("'", '')
         for letter in item:
-            if letter == ',' or letter == '.' or letter == ';' or letter == '(' or letter == ')' or letter == '/' or letter == '"""'  or letter == '"' or letter == '?' or letter == '!':
+            if letter == ',' or letter == '.' or letter == ';' or letter == '(' or letter == ')' or letter == '/' or letter == '"""' or letter == '"\"' or letter == '"' or letter == '?' or letter == '!' or letter == '&' or letter == '#' or letter == '[' or letter == ']' or letter == '%' or letter == '-' or letter == ':' or letter == '' or letter == '>' or letter == '<':
                 letter = ''
             elif letter.isdigit() == True:
                 letter = ''
@@ -25,19 +25,16 @@ def load_care(path,language):
 def stop_words(sentence,language):
     stopWords = set(stopwords.words(language))
     wordsFiltered = []
-    words = sentence.split(' ')
-    for w in words:
-        #remove manually words with single quote
-        if w == "you're" or w == "i'll" or "we're" == w or w == "i'm" or w == "he's" and w == "she's" and w == "they're" :
+    sentence = sentence.split(' ')
+    for w in sentence:
+        w = w.rstrip()
+        if w == '   ' or w == '  ' or w == ' ' or w == '':
             continue
-
-        if w not in stopWords:
+        elif w not in stopWords:
             wordsFiltered.append(w)
 
     if(len(wordsFiltered) >= 1):
         return ' '.join(wordsFiltered)
     else:
         return sentence
-
-
 
