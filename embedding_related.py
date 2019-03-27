@@ -19,6 +19,7 @@ def wmdistance_b(src_model, tgt_model, document1, document2):
     Word2Vec vocab, `float('inf')` (i.e. infinity) will be returned.
     This method only works if `pyemd` is installed (can be installed via pip, but requires a C compiler).
    """
+
     logger = logging.getLogger(__name__)
     PYEMD_EXT = True
     if not PYEMD_EXT:
@@ -65,6 +66,7 @@ def wmdistance_b(src_model, tgt_model, document1, document2):
         logger.info('The distance matrix is all zeros. Aborting (returning inf).')
         return float('inf')
 
+
     def nbow(document):
         d = zeros(vocab_len, dtype=double)
         nbow = dictionary.doc2bow(document)  # Word frequencies.
@@ -72,6 +74,7 @@ def wmdistance_b(src_model, tgt_model, document1, document2):
         for idx, freq in nbow:
             d[idx] = freq / float(doc_len)  # Normalized word frequencies.
         return d
+
 
     # Compute nBOW representation of documents.
     d1 = nbow(document1)
@@ -108,11 +111,12 @@ def sentence_embedder(sentence_list, model, language):
     return emb
 
 
-def generate_matrix(src_model, tgt_model, src_sentences, tgt_sentences):
-    """""generates a csv file comparing all the sentences distances using wmd method
+def generate_matrix(src_model, tgt_model, src_sentences, tgt_sentences,csv = 'no'):
+    """""generates a csv file comparing all the sentences distances using wmd method.
+
          representation:
              |d00 d01| -> d00 = distance beetween src_sentence[0] and tgt_sentence[0]
-             |d10 d11|    d01 = distance beetween src_sentence[0] and tgt_sentence[0]
+             |d10 d11|    d01 = distance beetween src_sentence[0] and tgt_sentence[1]
                           d10 = distance beetwen src_sentence [1] and tgt_sentence[0]
                           d11 = distance beetwen src_sentence [1] and tgt_sentence[1]
 
@@ -124,5 +128,6 @@ def generate_matrix(src_model, tgt_model, src_sentences, tgt_sentences):
             distances.append(wmdistance_b(src_model, tgt_model, src_sentences[i], tgt_sentences[j]))
         matrix = np.insert(matrix, i, distances, 0)
     matrix = matrix[:len(src_sentences)]
-    #from datetime import datetime
-    np.savetxt("./results/result_matrix.csv", matrix, delimiter=",")
+    if csv == 'yes':
+        np.savetxt("result_matrix4.csv",matrix, delimiter=",")
+    return matrix
