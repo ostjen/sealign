@@ -131,3 +131,10 @@ def generate_matrix(src_model, tgt_model, src_sentences, tgt_sentences,csv = 'no
     if csv == 'yes':
         np.savetxt("result_matrix4.csv",matrix, delimiter=",")
     return matrix
+
+def matrix_evaluation(matrix):
+    result = 0
+    for i in range(0,matrix.shape[0]):
+        if min(matrix[i]) == matrix[i][i]:
+            result = result + 1
+    return result/matrix.shape[0]
