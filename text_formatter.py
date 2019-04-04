@@ -1,22 +1,29 @@
 from nltk.corpus import stopwords
 
-def load_care(input,language):
-    text_en = []
 
+# Load text and treat
+def load_care(input, model, language):
+    text_en = []
+    stopWords = set(stopwords.words(language))
     for item in input:
         item = item.lower()
         stringlist = []
+        aux = []
         item = item.replace("'", '')
         for letter in item:
             if letter == ',' or letter == '.' or letter == ';' or letter == '(' or letter == ')' or letter == '/' or letter == '"""' or letter == '"\"' or letter == '"' or letter == '?' or letter == '!' or letter == '&' or letter == '#' or letter == '[' or letter == ']' or letter == '%' or letter == '-' or letter == ':' or letter == '' or letter == '>' or letter == '<':
                 letter = ''
             elif letter.isdigit() == True:
                 letter = ''
-            stringlist.append(letter)
-        text_en.append(''.join(stringlist))
+            stringlist.append(letter)                        # list of chars
+        stringlist = ''.join(stringlist)                     # transform into a string
 
-    for i in range(0, len(text_en)):
-        text_en[i] = stop_words(text_en[i], language)
+        for word in stringlist.split(' '):                   # remove out of dic and stopwords
+            if word in model:
+                if word not in stopWords:
+                    aux.append(word)
+
+        text_en.append(aux)
 
     return text_en
 

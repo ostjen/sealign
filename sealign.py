@@ -8,9 +8,7 @@ tgt_path = '~/desktop/embeddings/wiki.es.align.vec'
 en_in = open('./samples/test-enes.en', encoding='utf8').readlines()
 es_in = open('./samples/test-enes.es', encoding='utf8').readlines()
 
-#raw input will be used later
-english_text = load_care(en_in,'english')
-spanish_text = load_care(es_in,'spanish')
+
 #---------------loading word2vec models ------------------------------------------------------------------------
 print('\nloading models ...')
 src_model = gensim.models.KeyedVectors.load_word2vec_format(src_path)
@@ -18,6 +16,10 @@ print('\nsrc model loaded')
 tgt_model = gensim.models.KeyedVectors.load_word2vec_format(tgt_path)
 print('\ndone')
 #---------------------------------------------------------------------------------------------------------------
+
+#raw input will be used later
+english_text = load_care(en_in,src_model'english')
+spanish_text = load_care(es_in,tgt_model,'spanish')
 
 matrix = generate_matrix(src_model, tgt_model, english_text[:50], spanish_text[:50],csv = 'yes')
 

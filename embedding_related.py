@@ -28,8 +28,6 @@ def wmdistance_b(src_model, tgt_model, document1, document2):
     # Remove out-of-vocabulary words.
     len_pre_oov1 = len(document1)
     len_pre_oov2 = len(document2)
-    document1 = [token for token in document1 if token in src_model]
-    document2 = [token for token in document2 if token in tgt_model]
     diff1 = len_pre_oov1 - len(document1)
     diff2 = len_pre_oov2 - len(document2)
     if diff1 > 0 or diff2 > 0:
@@ -84,33 +82,6 @@ def wmdistance_b(src_model, tgt_model, document1, document2):
     return emd(d1, d2, distance_matrix)
 
 
-def embedder(sentence, model, language):
-    first_word = 0
-    word_emb = []
-    sentence_test = stop_words(sentence, language)
-    if len(sentence_test) > 1:  # do not apply stopwords for really short sentences
-        sentence = sentence_test
-
-    for word in sentence[:len(sentence) - 2]:  # delete \n -> last 2 chars
-        if first_word == 0:
-            if word in model:
-                word_emb = model[word]
-                first_word = 1
-        else:
-            if word in model:
-                word_emb = word_emb + model[word]
-
-    return word_emb  # np.append(word_emb,len(sentence))  returns the word embedding plus its size(300 + 1)
-
-
-def sentence_embedder(sentence_list, model, language):
-    emb = []
-    for sentence in sentence_list:
-        if (len(sentence) > 1):
-            emb.append(embedder(sentence, model, language))
-    return emb
-
-
 def generate_matrix(src_model, tgt_model, src_sentences, tgt_sentences,csv = 'no'):
     """""generates a csv file comparing all the sentences distances using wmd method.
 
@@ -138,3 +109,44 @@ def matrix_evaluation(matrix):
         if min(matrix[i]) == matrix[i][i]:
             result = result + 1
     return result/matrix.shape[0]
+
+
+
+
+
+
+
+
+
+
+
+
+
+#-------------------------------TEST ONLY-----------------------------------------------------------------
+def embedder(sentence, model, language):
+    first_word = 0
+    word_emb = []
+    sentence_test = stop_words(sentence, language)
+    if len(sentence_test) > 1:  # do not apply stopwords for really short sentences
+        sentence = sentence_test
+
+    for word in sentence[:len(sentence) - 2]:  # delete \n -> last 2 chars
+        if first_word == 0:
+            if word in model:
+                word_emb = model[word]
+                first_word = 1
+        else:
+            if word in model:
+                word_emb = word_emb + model[word]
+
+    return word_emb  # np.append(word_emb,len(sentence))  returns the word embedding plus its size(300 + 1)
+
+
+def sentence_embedder(sentence_list, model, language):
+    emb = []
+    for sentence in sentence_list:
+        if (len(sentence) > 1):
+            emb.append(embedder(sentence, model, language))
+    return emb
+
+#----------------------------------------------------------------------------------------------------------
