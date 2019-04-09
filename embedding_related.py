@@ -1,4 +1,5 @@
 import gensim
+import re
 from nltk.corpus import stopwords
 import logging
 from text_formatter import *
@@ -112,39 +113,25 @@ def matrix_evaluation(matrix):
     return result/matrix.shape[0]
 
 
-# Load text and treat
-def load_care(input, model, language):
+def load_care(raw_in, model, language,stop_w_flag = True):
+    """"receives a raw list of sentences and transforms it into a formatted, tokenized and word2vec friendly list of sentences
+    stop_w_flag = optional argument to disable stop_words
+    """""
     text_en = []
     stopWords = set(stopwords.words(language))
-    for item in input:
-        item = item.lower()
-        stringlist = []
+    for sentence in raw_in:
         aux = []
-        item = item.replace("'", '')
-        for letter in item:
-            if letter == ',' or letter == '.' or letter == ';' or letter == '(' or letter == ')' or letter == '/' or letter == '"""' or letter == '"\"' or letter == '"' or letter == '?' or letter == '!' or letter == '&' or letter == '#' or letter == '[' or letter == ']' or letter == '%' or letter == '-' or letter == ':' or letter == '' or letter == '>' or letter == '<':
-                letter = ''
-            elif letter.isdigit() == True:
-                letter = ''
-            stringlist.append(letter)                        # list of chars
-        stringlist = ''.join(stringlist)                     # transform into a string
-
-        for word in stringlist.split(' '):                   # remove out of dic and stopwords
+        sentence = sentence.lower().split(' ')
+        for word in sentence:
+            if word.isalpha() == False:
+                word = re.sub(r'[^a-z]', '', word)                  #regular expression that removes each non lowercase letter
             if word in model:
-                if word not in stopWords:
+                if stop_w_flag == False:
                     aux.append(word)
-
+                elif word not in stopWords:
+                    aux.append(word)
         text_en.append(aux)
-
     return text_en
-
-
-
-
-
-
-
-
 
 
 
