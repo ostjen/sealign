@@ -3,12 +3,25 @@
 Use of word embeddings for bilingual sentence alignment. 
 
 
-# tokenizer.py
+## Dependencies
+
+Numpy(https://github.com/numpy/numpy)
+Gensim (https://github.com/RaRe-Technologies/gensim)
+NLTK(https://github.com/nltk/nltk)
+
+
+
+## tokenizer.py
 
 Script that uses NLTK model for tokenization and adds a * symbol for reference. 
-First  command line argument -> input text file
-Second command line argument -> output file
 
+'''
+python tokenizer.py input.txt output.txt
+'''
 
-# Downloads
+## Usage
+'''
+python sealign.py
+'''
+## Downloads
 Pre-trained embeddings at https://fasttext.cc/docs/en/aligned-vectors.html 
