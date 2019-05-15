@@ -15,13 +15,13 @@ NLTK(https://github.com/nltk/nltk)
 
 Script that uses NLTK model for tokenization and adds a * symbol for reference. 
 
-'''
+```
 python tokenizer.py input.txt output.txt
-'''
+```
 
 ## Usage
-'''
+```
 python sealign.py
-'''
+```
 ## Downloads
 Pre-trained embeddings at https://fasttext.cc/docs/en/aligned-vectors.html 
